@@ -390,12 +390,13 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
   renderNormalOption() {
     const { isObject = false, displayValue, showCheckbox, style, singleSelect } = this.props;
     const { highlightOption } = this.state;
-    return this.state.options.map((option, i) => (
+    return this.state.options.map((option, i) => {
+      const highlightedStyle = highlightOption === i ? style['highlightOption'] : style['option'];
+      return (
           <li
             key={`option${i}`}
-            style={style['option']}
+            style={highlightOption}
             className={`
-              ${highlightOption === i ? `highlightOption highlight` : ""} 
               ${this.fadeOutSelection(option) && 'disableSelection'} 
               ${this.isDisablePreSelectedValues(option) && 'disableSelection'} option
             `}
@@ -411,7 +412,7 @@ export class Multiselect extends React.Component<IMultiselectProps, any> {
             )}
             {isObject ? option[displayValue] : (option || '').toString()}
           </li>
-    ));
+    )});
   }
 
   renderSelectedList() {
